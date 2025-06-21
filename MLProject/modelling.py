@@ -82,7 +82,7 @@ with mlflow.start_run(run_name="Autolog - RandomForestClassifier"):
     print(f"Support (1): {support.get(1, 0)}, Support (0): {support.get(0, 0)}")
 
 # Simpan model ke lokal
-output_path = "models/randomforest_model.pkl"
+output_path = "models/forest_model.pkl"
 os.makedirs(os.path.dirname(output_path), exist_ok=True)
 joblib.dump(pipeline, output_path)
 print(f"Model disimpan di: {output_path}")
