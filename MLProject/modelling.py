@@ -15,9 +15,8 @@ parser.add_argument('--data_path', type=str, required=True, help='Path to cleane
 args = parser.parse_args()
 csv_path = os.path.abspath(args.data_path)
 
-# Import custom preprocessor
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'preprocessing')))
-from automate_Fakhrizal import SklearnPreprocessor
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from preprocessing.automate_Fakhrizal import SklearnPreprocessor
 
 # Setup MLflow & DagsHub tracking
 username = os.getenv("MLFLOW_TRACKING_USERNAME")
