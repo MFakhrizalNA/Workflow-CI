@@ -4,6 +4,7 @@ import joblib
 import pandas as pd
 import numpy as np
 import dagshub
+import dagshub.auth
 from sklearn.pipeline import Pipeline
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
@@ -25,13 +26,12 @@ password = os.getenv("MLFLOW_TRACKING_PASSWORD")
 mlflow.set_tracking_uri("https://dagshub.com/MFakhrizalNA/MSML_Fakhrizal.mlflow")
 mlflow.set_experiment("Titanic Survival Prediction 1")
 
-# ✅ Auth injected here explicitly
+# Auth
+dagshub.auth.add_app_token(password)
 dagshub.init(
     repo_owner='MFakhrizalNA',
     repo_name='MSML_Fakhrizal',
-    mlflow=True,
-    user=username,
-    token=password
+    mlflow=True
 )
 
 # Enable autologging
