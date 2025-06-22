@@ -22,9 +22,9 @@ sys.path.append(
 from preprocessing.automate_Fakhrizal import SklearnPreprocessor
 
 # Konfigurasi MLflow dan DagsHub
+username = os.getenv("MLFLOW_TRACKING_USERNAME")
+password = os.getenv("MLFLOW_TRACKING_PASSWORD")
 mlflow.set_tracking_uri("https://dagshub.com/MFakhrizalNA/MSML_Fakhrizal.mlflow")
-os.environ["MLFLOW_TRACKING_USERNAME"] = "MFakhrizalNA"
-os.environ["MLFLOW_TRACKING_PASSWORD"] = "82b116729c790ec9bd93d7e8f99d7d815b531339"
 
 mlflow.set_experiment("Titanic Survival Prediction 1")
 dagshub.init(repo_owner='MFakhrizalNA', repo_name='MSML_Fakhrizal', mlflow=True)
