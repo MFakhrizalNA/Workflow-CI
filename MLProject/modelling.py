@@ -9,6 +9,11 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, roc_auc_score, log_loss
 
+parser = argparse.ArgumentParser()
+parser.add_argument('--data_path', type=str, required=True, help='Path to cleaned dataset CSV file')
+args = parser.parse_args()
+csv_path = args.data_path
+
 # Path ke preprocessing class
 sys.path.append(
     os.path.abspath(
