@@ -26,8 +26,8 @@ jobs:
 
     - name: Set Environment Variables
       run: |
-        echo "MLFLOW_TRACKING_USERNAME=${{ vars.MLFLOW_TRACKING_USERNAME }}" >> $GITHUB_ENV
-        echo "MLFLOW_TRACKING_PASSWORD=${{ vars.MLFLOW_TRACKING_PASSWORD }}" >> $GITHUB_ENV
+        echo "MLFLOW_TRACKING_USERNAME=${{ secrets.MLFLOW_TRACKING_USERNAME }}" >> $GITHUB_ENV
+        echo "MLFLOW_TRACKING_PASSWORD=${{ secrets.MLFLOW_TRACKING_PASSWORD }}" >> $GITHUB_ENV
 
     - name: Run MLflow Project
       working-directory: MLProject
