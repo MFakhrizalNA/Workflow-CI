@@ -1,7 +1,7 @@
 name: titanic-survival-project
 
 conda_env: conda.yaml
-Add commentMore actions
+
 entry_points:
   main:
     parameters:
