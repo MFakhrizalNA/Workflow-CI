@@ -35,10 +35,14 @@ jobs:
         cd MLProject
         mlflow run . -P data_path=preprocessing/cleaned_data.csv --env-manager=local | tee output.log
 
-
-        RUN_ID=$(grep 'MLFLOW_RUN_ID=' output.log | cut -d'=' -f2)
-        echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
-        echo "Latest run_id: $RUN_ID"
+        if grep -q 'MLFLOW_RUN_ID=' output.log; then
+          RUN_ID=$(grep 'MLFLOW_RUN_ID=' output.log | cut -d'=' -f2)
+          echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
+          echo "Latest run_id: $RUN_ID"
+        else
+          echo "MLFLOW_RUN_ID not found. MLflow run might have failed."
+          cat output.log
+          exit 1
 
     - name: Upload trained model
       uses: actions/upload-artifact@v4
