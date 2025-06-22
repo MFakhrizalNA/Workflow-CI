@@ -33,29 +33,18 @@ jobs:
     - name: Run MLflow Project and get run_id
       run: |
         cd MLProject
-
-        echo "Cek apakah file cleaned_data.csv tersedia:"
-        ls -l preprocessing/cleaned_data.csv || (echo "❌ File tidak ditemukan!" && exit 1)
-
-        echo "Menjalankan MLflow project..."
         mlflow run . -P data_path=preprocessing/cleaned_data.csv --env-manager=local | tee output.log
 
-        echo "Mengambil RUN_ID dari output..."
+
         RUN_ID=$(grep 'MLFLOW_RUN_ID=' output.log | cut -d'=' -f2)
         echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
         echo "Latest run_id: $RUN_ID"
-
-        # Tambahan untuk validasi output model
-        if [ ! -f models/randomforest_model.pkl ]; then
-          echo "❌ Model tidak ditemukan setelah mlflow run!"
-          exit 1
-        fi
 
     - name: Upload trained model
       uses: actions/upload-artifact@v4
       with:
         name: trained-model
-        path: MLProject/models/forest_model.pkl
+        path: models/Model_randomforest.pkl
 
     - name: Upload MLflow logs
       uses: actions/upload-artifact@v4
