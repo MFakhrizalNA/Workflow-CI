@@ -6,11 +6,11 @@ on:
   workflow_dispatch:
 
 jobs:
-  train-and-deploy:
+  train:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
+    - name: Checkout repository
       uses: actions/checkout@v3
 
     - name: Set up Miniconda
@@ -20,9 +20,12 @@ jobs:
         environment-file: MLProject/conda.yaml
         auto-activate-base: false
 
+
+
     - name: Install pip dependencies
       run: |
-        pip install mlflow dagshub joblib scikit-learn pandas numpy
+        pip install mlflow dagshub joblib
+
 
     - name: Export MLflow Environment Variables
       run: |
@@ -33,7 +36,8 @@ jobs:
     - name: Run MLflow Project and get run_id
       run: |
         cd MLProject
-        mlflow run . -P data_path=cleaned_data.csv --env-manager=local | tee output.log
+        mlflow run . -P data_path=preprocessing/cleaned_data.csv --env-manager=local | tee output.log
+
 
         RUN_ID=$(grep 'MLFLOW_RUN_ID=' output.log | cut -d'=' -f2)
         echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
@@ -43,7 +47,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: trained-model
-        path: MLProject/models/forest_model.pkl
+        path: models/Model_randomforest.pkl
 
     - name: Upload MLflow logs
       uses: actions/upload-artifact@v4
@@ -52,13 +56,13 @@ jobs:
         path: MLProject/mlruns/
 
     - name: Log in to Docker Hub
-      uses: docker/login-action@v3
+      uses: docker/login-action@v2
       with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+        username: ${{ vars.DOCKER_USERNAME }}
+        password: ${{ vars.DOCKER_PASSWORD }}
 
     - name: Build Docker image
-      run: docker build -t ${{ secrets.DOCKER_USERNAME }}/titanic-mlproject:latest MLProject/
+      run: docker build -t fakhrizal25/titanic-mlproject:latest MLProject/
 
     - name: Push Docker image
-      run: docker push ${{ secrets.DOCKER_USERNAME }}/titanic-mlproject:latest
+      run: docker push fakhrizal25/titanic-mlproject:latest
