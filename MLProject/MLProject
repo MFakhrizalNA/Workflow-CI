@@ -2,6 +2,8 @@ name: titanic-mlproject
 
 conda_env: conda.yaml
 
+entry_point: main
+
 entry_points:
   main:
     parameters:
