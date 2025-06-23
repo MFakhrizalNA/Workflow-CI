@@ -35,10 +35,10 @@ jobs:
 
     - name: Run MLflow Project and get run_id
       run: |
+        set -e
         cd MLProject
         mlflow run . -P data_path=preprocessing/cleaned_data.csv --env-manager=local | tee output.log
-
-
+    
         RUN_ID=$(grep 'MLFLOW_RUN_ID=' output.log | cut -d'=' -f2)
         echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
         echo "Latest run_id: $RUN_ID"
@@ -49,11 +49,11 @@ jobs:
         name: trained-model
         path: models/Model_randomforest.pkl
 
-    - name: Upload MLflow logs
+    - name: Upload trained model
       uses: actions/upload-artifact@v4
       with:
-        name: mlflow-logs
-        path: MLProject/mlruns/
+        name: trained-model
+        path: models/forest_model.pkl
 
     - name: Log in to Docker Hub
       uses: docker/login-action@v2
