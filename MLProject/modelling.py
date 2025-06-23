@@ -29,7 +29,7 @@ mlflow.set_tracking_uri("https://dagshub.com/MFakhrizalNA/MSML_Fakhrizal.mlflow"
 os.environ["MLFLOW_TRACKING_USERNAME"] = "MFakhrizalNA"
 os.environ["MLFLOW_TRACKING_PASSWORD"] = "82b116729c790ec9bd93d7e8f99d7d815b531339"
 
-mlflow.set_experiment("Titanic Survival Prediction 1")
+mlflow.set_experiment("Default")
 
 # Load dataset
 data = pd.read_csv(args.data_path)
