@@ -1,11 +1,10 @@
-name: titanic-survival-project
+name: titanic-mlproject
 
 conda_env: conda.yaml
 
 entry_points:
   main:
     parameters:
-      data_path: {type: str, default: "cleaned_data.csv"}
-      model_type: {type: str, default: "RandomForest"}
+      data_path: {type: str}
     command: >
-      python modelling.py --data_path {data_path} --model_type {model_type}
+      python modelling.py --data_path {data_path}
