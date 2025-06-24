@@ -5,6 +5,10 @@ on:
     branches: [master]
   workflow_dispatch:
 
+env:
+  CSV_URL: "MLProject/cleaned_data.csv"
+  TARGET_VAR: "Survival"
+
 jobs:
   train:
     runs-on: ubuntu-latest
@@ -20,8 +24,6 @@ jobs:
         environment-file: MLProject/conda.yaml
         auto-activate-base: false
 
-
-
     - name: Install pip dependencies
       run: |
         pip install mlflow dagshub joblib
@@ -35,9 +37,6 @@ jobs:
 
     - name: Run MLflow Project and get run_id
       run: |
-        cd MLProject
-        mlflow run . -e main -P data_path=preprocessing/cleaned_data.csv --env-manager=local | tee output.log
-    
         RUN_ID=$(grep 'MLFLOW_RUN_ID=' output.log | cut -d'=' -f2)
         echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
         echo "Latest run_id: $RUN_ID"
