@@ -45,12 +45,6 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: trained-model
-        path: models/Model_randomforest.pkl
-
-    - name: Upload trained model
-      uses: actions/upload-artifact@v4
-      with:
-        name: trained-model
         path: models/forest_model.pkl
 
     - name: Log in to Docker Hub
